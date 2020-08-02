@@ -50,16 +50,12 @@ class Tweety():
             print(e.reason)
 
     def get_trends(self):
-        trends = self.api.trends_place(1)
-        counter = 10
-
-        if len(self.trends) != 0:
-            self.trends = deque([])
-
-        for trend in tweepy.Cursor(self.api.trends_place(1)).items():
-            if counter > 0:
-                self.trends.append(tweet)
-                counter -= 1
+        usaTrends = self.api.trends_place(23424977)
+        trendData = usaTrends[0]
+        trends = trendData['trends']
+        trendNames = [trend['name'] for trend in trends[:10]]
+        listOfTrends = '\n'.join(trendNames)
+        print(listOfTrends)
 
     def retweet_current_tweet_in_queue(self):
         try:
@@ -124,5 +120,6 @@ t.get_home_time_line()
 
 t.print_tweets()
 
+t.get_trends()
 # t.HYPE_ME_UP()
 # t.TONE_IT_DOWN()
