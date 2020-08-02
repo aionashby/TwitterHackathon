@@ -36,7 +36,7 @@ class Tweety():
         if len(self.tweets) != 0:
             self.tweets = deque([])
 
-        for tweet in home_time_line:
+        for tweet in tweepy.Cursor(self.api.user_timeline, tweet_mode="extended").items():
             if counter > 0:
                 self.tweets.append(tweet)
                 counter -= 1
@@ -75,6 +75,10 @@ class Tweety():
         else:
             return
 
+    def print_tweets(self):
+        for tweet in self.tweets:
+            print(tweet.full_text.replace("\n", " "))
+
     def HYPE_ME_UP(self):
 
         hype_team = ["itsjulieromero", "Hummmmmbaby",
@@ -86,7 +90,7 @@ class Tweety():
             except tweepy.TweepError as e:
                 print(e.reason)
 
-    def TONE_IT_DONE(self):
+    def TONE_IT_DOWN(self):
         hype_team = ["itsjulieromero", "Hummmmmbaby",
                      "rheanamariee", "StoicLeys"]
 
@@ -104,7 +108,9 @@ t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
 
 t.authenticate_api()
 
-# t.get_home_time_line()
+t.get_home_time_line()
 
-t.HYPE_ME_UP()
-t.TONE_IT_DONE()
+t.print_tweets()
+
+# t.HYPE_ME_UP()
+# t.TONE_IT_DOWN()
