@@ -32,6 +32,26 @@ class Tweety():
         except tweepy.TweepError as e:
             print(e.reason)
 
+    def get_trends(self):
+        usaTrends = self.api.trends_place(23424977)
+        trendData = usaTrends[0]
+
+        trends = trendData['trends']
+        self.trends = deque([trend['name'] for trend in trends[:10]])
+
+    def dequeue_trend_queue(self):
+        try:
+            last_trend = self.trends.popleft()
+            return last_trend
+        except tweepy.TweepError as e:
+            print(e.reason)
+
+    def peek_at_current_trend(self):
+        if len(self.trends) != 0:
+            return self.trends[0]
+        else:
+            return
+
     def get_home_time_line(self):
         home_time_line = self.api.home_timeline()
         counter = 10
@@ -126,8 +146,15 @@ t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
 t.authenticate_api()
 
 
-t.search_tweets("@realDonaldTrump")
-t.print_tweets()
+t.get_trends()
+print(t.trends)
+t.peek_at_current_trend()
+t.dequeue_trend_queue()
+print(t.trends)
+
+
+# t.search_tweets("@realDonaldTrump")
+# t.print_tweets()
 # t.get_home_time_line()
 
 # t.print_tweets()
