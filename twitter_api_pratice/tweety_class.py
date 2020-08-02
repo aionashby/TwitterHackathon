@@ -2,21 +2,6 @@ import tweepy
 import user
 from collections import deque
 
-# # authenticates te user
-# auth = tweepy.OAuthHandler(user.CONSUMER_KEY, user.CONSUMER_SECRET)
-
-# # authenitcates the user's tokens
-# auth.set_access_token(user.ACCESS_TOKEN, user.ACCESS_TOKEN_SECRET)
-
-
-# api = tweepy.API(auth)
-
-
-# tweets_on_timeline = api.home_timeline()
-
-# for tweet in tweets_on_timeline:
-#     print(tweet)
-
 
 class Tweety():
     def __init__(self, CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET):
@@ -140,17 +125,17 @@ class Tweety():
                 print(e.reason)
 
 
-t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
-           user.ACCESS_TOKEN, user.ACCESS_TOKEN_SECRET)
+# t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
+#            user.ACCESS_TOKEN, user.ACCESS_TOKEN_SECRET)
 
-t.authenticate_api()
+# t.authenticate_api()
 
 
-t.get_trends()
-print(t.trends)
-t.peek_at_current_trend()
-t.dequeue_trend_queue()
-print(t.trends)
+# t.get_trends()
+# print(t.trends)
+# t.peek_at_current_trend()
+# t.dequeue_trend_queue()
+# print(t.trends)
 
 
 # t.search_tweets("@realDonaldTrump")
