@@ -65,6 +65,18 @@ class Tweety():
         except tweepy.TweepError as e:
             print(e.reason)
 
+    def peek_at_current_tweet(self):
+        if len(self.tweets) != 0:
+            return self.tweets[0]
+        else:
+            return
+
+    def create_new_tweet(self, tweet):  # posts new tweet, tweet variable is a string
+        if self.api not None:
+            self.api.update_status(tweet)
+        else:
+            return
+
 
 t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
            user.ACCESS_TOKEN, user.ACCESS_TOKEN_SECRET)
