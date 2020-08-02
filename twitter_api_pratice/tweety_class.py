@@ -27,7 +27,30 @@ class Tweety():
         self.api = None
 
     def authenticate_api(self):
-        self.api = tweepy.API(self.auth, wait_on_rate_limit=True)
+        try:
+            self.api = tweepy.API(self.auth, wait_on_rate_limit=True)
+        except tweepy.TweepError as e:
+            print(e.reason)
+
+    def get_trends(self):
+        usaTrends = self.api.trends_place(23424977)
+        trendData = usaTrends[0]
+
+        trends = trendData['trends']
+        self.trends = deque([trend['name'] for trend in trends[:10]])
+
+    def dequeue_trend_queue(self):
+        try:
+            last_trend = self.trends.popleft()
+            return last_trend
+        except tweepy.TweepError as e:
+            print(e.reason)
+
+    def peek_at_current_trend(self):
+        if len(self.trends) != 0:
+            return self.trends[0]
+        else:
+            return
 
     def get_home_time_line(self):
         home_time_line = self.api.home_timeline()
@@ -42,16 +65,15 @@ class Tweety():
                 counter -= 1
 
     def like_current_tweet_in_queue(self):
-
         try:
-            front_of_queue = self.tweets[0]
+            front_of_queue = self.peek_at_current_tweet()
             front_of_queue.favorite()
         except tweepy.TweepError as e:
             print(e.reason)
 
     def retweet_current_tweet_in_queue(self):
         try:
-            front_of_queue = self.tweets[0]
+            front_of_queue = self.peek_at_current_tweet()
             front_of_queue.retweet()
         except tweepy.TweepError as e:
             print(e.reason)
@@ -97,7 +119,7 @@ class Tweety():
     def HYPE_ME_UP(self):
 
         hype_team = ["itsjulieromero", "Hummmmmbaby",
-                     "rheanamariee", "StoicLeys"]
+                     "rheanamariee"]
 
         for user in hype_team:
             try:
@@ -107,7 +129,7 @@ class Tweety():
 
     def TONE_IT_DOWN(self):
         hype_team = ["itsjulieromero", "Hummmmmbaby",
-                     "rheanamariee", "StoicLeys"]
+                     "rheanamariee"]
 
         for user in hype_team:
             try:
@@ -124,8 +146,15 @@ t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
 t.authenticate_api()
 
 
-t.search_tweets("@realDonaldTrump")
-t.print_tweets()
+t.get_trends()
+print(t.trends)
+t.peek_at_current_trend()
+t.dequeue_trend_queue()
+print(t.trends)
+
+
+# t.search_tweets("@realDonaldTrump")
+# t.print_tweets()
 # t.get_home_time_line()
 
 # t.print_tweets()
