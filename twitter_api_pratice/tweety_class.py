@@ -27,7 +27,7 @@ class Tweety():
         self.api = None
 
     def authenticate_api(self):
-        self.api = tweepy.API(self.auth)
+        self.api = tweepy.API(self.auth, wait_on_rate_limit=True)
 
     def get_home_time_line(self):
         home_time_line = self.api.home_timeline()
@@ -36,7 +36,7 @@ class Tweety():
         if len(self.tweets) != 0:
             self.tweets = deque([])
 
-        for tweet in tweepy.Cursor(self.api.user_timeline, tweet_mode="extended").items():
+        for tweet in home_time_line:
             if counter > 0:
                 self.tweets.append(tweet)
                 counter -= 1
@@ -77,7 +77,7 @@ class Tweety():
 
     def print_tweets(self):
         for tweet in self.tweets:
-            print(tweet.full_text.replace("\n", " "))
+            print(tweet.text)
 
     def HYPE_ME_UP(self):
 
