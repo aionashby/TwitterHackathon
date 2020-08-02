@@ -48,8 +48,6 @@ class Tweety():
             front_of_queue.favorite()
         except tweepy.TweepError as e:
             print(e.reason)
-        except StopIteration:
-            break
 
     def retweet_current_tweet_in_queue(self):
         try:
@@ -72,10 +70,33 @@ class Tweety():
             return
 
     def create_new_tweet(self, tweet):  # posts new tweet, tweet variable is a string
-        if self.api not None:
+        if self.api != None:
             self.api.update_status(tweet)
         else:
             return
+
+    def HYPE_ME_UP(self):
+
+        hype_team = ["itsjulieromero", "Hummmmmbaby",
+                     "rheanamariee", "StoicLeys"]
+
+        for user in hype_team:
+            try:
+                self.api.create_friendship(user)
+            except tweepy.TweepError as e:
+                print(e.reason)
+
+    def TONE_IT_DONE(self):
+        hype_team = ["itsjulieromero", "Hummmmmbaby",
+                     "rheanamariee", "StoicLeys"]
+
+        for user in hype_team:
+            try:
+
+                self.api.destroy_friendship(user)
+
+            except tweepy.TweepError as e:
+                print(e.reason)
 
 
 t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
@@ -83,4 +104,7 @@ t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
 
 t.authenticate_api()
 
-t.get_home_time_line()
+# t.get_home_time_line()
+
+t.HYPE_ME_UP()
+t.TONE_IT_DONE()
