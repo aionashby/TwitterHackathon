@@ -41,6 +41,30 @@ class Tweety():
                 self.tweets.append(tweet)
                 counter -= 1
 
+    def like_current_tweet_in_queue(self):
+
+        try:
+            front_of_queue = self.tweets[0]
+            front_of_queue.favorite()
+        except tweepy.TweepError as e:
+            print(e.reason)
+        except StopIteration:
+            break
+
+    def retweet_current_tweet_in_queue(self):
+        try:
+            front_of_queue = self.tweets[0]
+            front_of_queue.retweet()
+        except tweepy.TweepError as e:
+            print(e.reason)
+
+    def dequeue_tweet_queue(self):
+        try:
+            last_tweet = self.tweets.popleft()
+            return last_tweet
+        except tweepy.TweepError as e:
+            print(e.reason)
+
 
 t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
            user.ACCESS_TOKEN, user.ACCESS_TOKEN_SECRET)
@@ -48,6 +72,3 @@ t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
 t.authenticate_api()
 
 t.get_home_time_line()
-
-for tweet in t.tweets:
-    print(tweet)
