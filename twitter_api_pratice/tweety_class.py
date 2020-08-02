@@ -57,8 +57,6 @@ class Tweety():
             front_of_queue.retweet()
         except tweepy.TweepError as e:
             print(e.reason)
-        except StopIteration:
-            break
 
     def dequeue_tweet_queue(self):
         try:
@@ -66,8 +64,6 @@ class Tweety():
             return last_tweet
         except tweepy.TweepError as e:
             print(e.reason)
-        except StopIteration:
-            break
 
 
 t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
