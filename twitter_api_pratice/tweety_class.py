@@ -27,7 +27,10 @@ class Tweety():
         self.api = None
 
     def authenticate_api(self):
-        self.api = tweepy.API(self.auth, wait_on_rate_limit=True)
+        try:
+            self.api = tweepy.API(self.auth, wait_on_rate_limit=True)
+        except tweepy.TweepError as e:
+            print(e.reason)
 
     def get_home_time_line(self):
         home_time_line = self.api.home_timeline()
@@ -42,16 +45,15 @@ class Tweety():
                 counter -= 1
 
     def like_current_tweet_in_queue(self):
-
         try:
-            front_of_queue = self.tweets[0]
+            front_of_queue = self.peek_at_current_tweet()
             front_of_queue.favorite()
         except tweepy.TweepError as e:
             print(e.reason)
 
     def retweet_current_tweet_in_queue(self):
         try:
-            front_of_queue = self.tweets[0]
+            front_of_queue = self.peek_at_current_tweet()
             front_of_queue.retweet()
         except tweepy.TweepError as e:
             print(e.reason)
@@ -97,7 +99,7 @@ class Tweety():
     def HYPE_ME_UP(self):
 
         hype_team = ["itsjulieromero", "Hummmmmbaby",
-                     "rheanamariee", "StoicLeys"]
+                     "rheanamariee"]
 
         for user in hype_team:
             try:
@@ -107,7 +109,7 @@ class Tweety():
 
     def TONE_IT_DOWN(self):
         hype_team = ["itsjulieromero", "Hummmmmbaby",
-                     "rheanamariee", "StoicLeys"]
+                     "rheanamariee"]
 
         for user in hype_team:
             try:
