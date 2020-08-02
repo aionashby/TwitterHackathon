@@ -79,6 +79,21 @@ class Tweety():
         for tweet in self.tweets:
             print(tweet.text)
 
+    def search_tweets(self, title):
+        try:
+
+            temp_tweets = self.api.search(title)
+            counter = 10
+
+            for tweet in temp_tweets:
+                self.tweets.append(tweet)
+                if counter < 1:
+                    break
+                counter -= 1
+
+        except tweepy.TweepError as e:
+            print(e.reason)
+
     def HYPE_ME_UP(self):
 
         hype_team = ["itsjulieromero", "Hummmmmbaby",
@@ -108,9 +123,12 @@ t = Tweety(user.CONSUMER_KEY, user.CONSUMER_SECRET,
 
 t.authenticate_api()
 
-t.get_home_time_line()
 
+t.search_tweets("@realDonaldTrump")
 t.print_tweets()
+# t.get_home_time_line()
+
+# t.print_tweets()
 
 # t.HYPE_ME_UP()
 # t.TONE_IT_DOWN()
